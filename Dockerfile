@@ -2,9 +2,13 @@
 
 ARG GO_VERSION="1.21"
 ARG ALPINE_VERSION="3.19"
+ARG XX_VERSION="1.3.0"
 ARG GOLANGCI_LINT_VERSION="v1.54.2"
 
+FROM --platform=$BUILDPLATFORM tonistiigi/xx:${XX_VERSION} AS xx
+
 FROM --platform=$BUILDPLATFORM golang:${GO_VERSION}-alpine${ALPINE_VERSION} AS base
+COPY --from=xx / /
 ENV CGO_ENABLED=0
 ENV GOFLAGS="-mod=vendor"
 RUN apk add --no-cache file git rsync
@@ -49,3 +53,35 @@ RUN --mount=target=/context \
     exit 1
   fi
 EOT
+
+FROM base AS version
+ARG GIT_REF
+RUN --mount=target=. <<EOT
+  set -e
+  case "$GIT_REF" in
+    refs/tags/v*) version="${GIT_REF#refs/tags/}" ;;
+    *) version=$(git describe --match 'v[0-9]*' --dirty='.m' --always --tags) ;;
+  esac
+  echo "$version" | tee /tmp/.version
+EOT
+
+FROM vendored AS build
+ARG TARGETPLATFORM
+RUN --mount=type=bind,target=. \
+    --mount=type=bind,from=version,source=/tmp/.version,target=/tmp/.version \
+    --mount=type=cache,target=/root/.cache \
+    --mount=type=cache,target=/go/pkg/mod <<EOT
+  set -ex
+  xx-go build -trimpath -ldflags "-s -w -X main.version=$(cat /tmp/.version)" -o /usr/bin/xcalxls2csv ./cmd/xcalxls2csv
+  xx-verify --static /usr/bin/xcalxls2csv
+EOT
+
+FROM scratch AS binary-unix
+COPY --link --from=build /usr/bin/xcalxls2csv /
+
+FROM scratch AS binary-windows
+COPY --link --from=build /usr/bin/xcalxls2csv /xcalxls2csv.exe
+
+FROM binary-unix AS binary-darwin
+FROM binary-unix AS binary-linux
+FROM binary-$TARGETOS AS binary
