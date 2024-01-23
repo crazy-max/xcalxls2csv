@@ -17,7 +17,7 @@ const (
 func ConvertToCSV(xcalxls string) ([]byte, error) {
 	f, err := xls.Open(xcalxls, "utf-8")
 	if err != nil {
-		return nil, errors.Wrapf(err, "cannot open XCalibur XLS file %q", xcalxls)
+		return nil, errors.Wrapf(err, "cannot open Xcalibur XLS file %q", xcalxls)
 	}
 
 	var samples []string
