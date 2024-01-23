@@ -54,6 +54,14 @@ target "artifact-all" {
   ]
 }
 
+target "release" {
+  target = "release"
+  output = ["${DESTDIR}/release"]
+  contexts = {
+    artifacts = "${DESTDIR}/artifact"
+  }
+}
+
 group "validate" {
   targets = ["lint", "validate-vendor"]
 }
