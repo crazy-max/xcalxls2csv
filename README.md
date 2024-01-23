@@ -41,8 +41,8 @@ available in [./pkg/xcal/fixtures](./pkg/xcal/fixtures):
 
 ```
 $ xcalxls2csv ./pkg/xcal/fixtures/MCF001120_0_Short.xls
-xcalxls2csv INF Converting Xcalibur XLS file ./pkg/xcal/fixtures/MCF001120_0_Short.xls to ./pkg/xcal/fixtures/MCF001120_0_Short.csv
-xcalxls2csv INF Xcalibur XLS file converted successfully to ./pkg/xcal/fixtures/MCF001120_0_Short.csv
+11:13AM INF Converting Xcalibur XLS file ./pkg/xcal/fixtures/MCF001120_0_Short.xls to ./pkg/xcal/fixtures/MCF001120_0_Short.csv
+11:13AM INF Xcalibur XLS file converted successfully to ./pkg/xcal/fixtures/MCF001120_0_Short.csv
 ```
 
 CSV file should be available in `./pkg/xcal/fixtures/MCF001120_0_Short.csv`.

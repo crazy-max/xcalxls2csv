@@ -26,7 +26,7 @@ type cli struct {
 
 func main() {
 	// parse command line
-	kctx := kong.Parse(&c,
+	_ = kong.Parse(&c,
 		kong.Name("xcalxls2csv"),
 		kong.Description(`Xcalibur XLS data frames to CSV`),
 		kong.UsageOnError(),
@@ -39,13 +39,9 @@ func main() {
 		}))
 
 	// logger
-	output := zerolog.ConsoleWriter{
+	log.Logger = zerolog.New(zerolog.ConsoleWriter{
 		Out: os.Stdout,
-	}
-	output.FormatTimestamp = func(i interface{}) string {
-		return kctx.Model.Name
-	}
-	log.Logger = zerolog.New(output).With().Timestamp().Logger()
+	}).With().Timestamp().Logger()
 	zerolog.SetGlobalLevel(zerolog.InfoLevel)
 
 	// handle os signals
