@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"path/filepath"
+	"strings"
 
 	"github.com/alecthomas/kong"
 	"github.com/crazy-max/xcalxls2csv/pkg/xcal"
@@ -19,7 +21,7 @@ var (
 type cli struct {
 	Version kong.VersionFlag
 	XcalXls string `kong:"name='xcalxls',arg,required,help='XCalibur XLS file to convert.'"`
-	Output  string `kong:"name='output',arg,required,help='Output CSV filename.'"`
+	Output  string `kong:"name='output',help='Custom output filename.'"`
 }
 
 func main() {
@@ -56,9 +58,20 @@ func main() {
 	}()
 
 	// start
+	_, err := os.Stat(c.XcalXls)
+	if err != nil {
+		log.Fatal().Err(err).Msg("cannot stat XCalibur XLS file")
+	}
+
+	if c.Output == "" {
+		c.Output = fmt.Sprintf("%s.csv", strings.TrimSuffix(c.XcalXls, filepath.Ext(c.XcalXls)))
+	}
+
 	if dt, err := xcal.ConvertToCSV(c.XcalXls); err != nil {
 		log.Fatal().Err(err).Msg("cannot convert XCalibur XLS file")
 	} else if err := os.WriteFile(c.Output, dt, 0644); err != nil {
 		log.Fatal().Err(err).Msg("cannot write output file")
+	} else {
+		log.Info().Msgf("XCalibur XLS file converted successfully to %s", c.Output)
 	}
 }
