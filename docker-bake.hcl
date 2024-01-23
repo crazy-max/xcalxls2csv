@@ -13,7 +13,13 @@ group "default" {
 }
 
 group "validate" {
-  targets = ["validate-vendor"]
+  targets = ["lint", "validate-vendor"]
+}
+
+target "lint" {
+  inherits = ["_common"]
+  target = "lint"
+  output = ["type=cacheonly"]
 }
 
 target "validate-vendor" {

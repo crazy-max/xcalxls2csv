@@ -2,12 +2,23 @@
 
 ARG GO_VERSION="1.21"
 ARG ALPINE_VERSION="3.19"
+ARG GOLANGCI_LINT_VERSION="v1.54.2"
 
 FROM --platform=$BUILDPLATFORM golang:${GO_VERSION}-alpine${ALPINE_VERSION} AS base
 ENV CGO_ENABLED=0
 ENV GOFLAGS="-mod=vendor"
 RUN apk add --no-cache file git rsync
 WORKDIR /src
+
+FROM base as lint
+RUN apk add --no-cache gcc musl-dev
+WORKDIR /
+ARG GOLANGCI_LINT_VERSION
+RUN wget -O- -nv https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s ${GOLANGCI_LINT_VERSION}
+WORKDIR /src
+RUN --mount=target=/src \
+    --mount=target=/root/.cache,type=cache \
+    golangci-lint run
 
 FROM base AS vendored
 RUN --mount=target=/context \
