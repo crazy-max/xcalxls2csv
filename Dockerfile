@@ -85,3 +85,19 @@ COPY --link --from=build /usr/bin/xcalxls2csv /xcalxls2csv.exe
 FROM binary-unix AS binary-darwin
 FROM binary-unix AS binary-linux
 FROM binary-$TARGETOS AS binary
+
+FROM --platform=$BUILDPLATFORM alpine:${ALPINE_VERSION} AS build-artifact
+WORKDIR /work
+ARG TARGETOS
+ARG TARGETARCH
+ARG TARGETVARIANT
+RUN --mount=type=bind,target=/src \
+    --mount=type=bind,from=binary,target=/build <<EOT
+  set -ex
+  mkdir /out
+  ext=$([ "$TARGETOS" = "windows" ] && echo ".exe" || echo "")
+  cp /build/xcalxls2csv${ext} /out/xcalxls2csv-${TARGETOS}-${TARGETARCH}${TARGETVARIANT}${ext}
+EOT
+
+FROM scratch AS artifact
+COPY --link --from=build-artifact /out /
