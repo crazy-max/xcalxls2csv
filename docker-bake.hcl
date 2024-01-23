@@ -62,6 +62,12 @@ target "release" {
   }
 }
 
+target "test" {
+  inherits = ["_common"]
+  target = "test-coverage"
+  output = ["${DESTDIR}/coverage"]
+}
+
 group "validate" {
   targets = ["lint", "validate-vendor"]
 }
