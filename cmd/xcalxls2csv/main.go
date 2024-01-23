@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
-	"syscall"
 
 	"github.com/alecthomas/kong"
 	"github.com/crazy-max/xcalxls2csv/pkg/xcal"
@@ -48,8 +47,8 @@ func main() {
 	zerolog.SetGlobalLevel(zerolog.InfoLevel)
 
 	// handle os signals
-	channel := make(chan os.Signal)
-	signal.Notify(channel, os.Interrupt, syscall.SIGTERM)
+	channel := make(chan os.Signal, 1)
+	signal.Notify(channel, os.Interrupt, SIGTERM)
 	go func() {
 		sig := <-channel
 		log.Warn().Msgf("caught signal %v", sig)
