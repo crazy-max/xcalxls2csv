@@ -4,6 +4,9 @@ github.com/alecthomas/kong
 # github.com/davecgh/go-spew v1.1.1
 ## explicit
 github.com/davecgh/go-spew/spew
+# github.com/elliotchance/orderedmap/v2 v2.2.0
+## explicit; go 1.18
+github.com/elliotchance/orderedmap/v2
 # github.com/extrame/ole2 v0.0.0-20160812065207-d69429661ad7
 ## explicit
 github.com/extrame/ole2

@@ -1,7 +1,10 @@
 package xcal
 
 import (
+	"fmt"
 	"os"
+	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -14,9 +17,11 @@ func TestConvertToCSV(t *testing.T) {
 	for _, f := range fixtures {
 		f := f
 		t.Run(f.Name(), func(t *testing.T) {
-			res, err := ConvertToCSV("./fixtures/" + f.Name())
+			f := "./fixtures/" + f.Name()
+			res, err := ConvertToCSV(f)
 			assert.NoError(t, err)
 			t.Log(string(res))
+			assert.NoError(t, os.WriteFile(fmt.Sprintf("%s.csv", strings.TrimSuffix(f, filepath.Ext(f))), res, 0644))
 		})
 	}
 }
