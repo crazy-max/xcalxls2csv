@@ -15,7 +15,7 @@ const (
 	colArea   = 4
 )
 
-func ConvertToCSV(xcalxls string) ([]byte, error) {
+func ConvertToCSV(xcalxls string) (_ []byte, err error) {
 	f, err := xls.Open(xcalxls, "utf-8")
 	if err != nil {
 		return nil, errors.Wrapf(err, "cannot open Xcalibur XLS file %q", xcalxls)
@@ -56,7 +56,10 @@ func ConvertToCSV(xcalxls string) ([]byte, error) {
 
 	var buf bytes.Buffer
 	writer := csv.NewWriter(&buf)
-	defer writer.Flush()
+	defer func() {
+		writer.Flush()
+		err = writer.Error()
+	}()
 
 	headerRow := []string{"Sample"}
 	for el := data.Front(); el != nil; el = el.Next() {
@@ -64,6 +67,10 @@ func ConvertToCSV(xcalxls string) ([]byte, error) {
 	}
 	if err = writer.Write(headerRow); err != nil {
 		return nil, errors.Wrap(err, "cannot write header row")
+	}
+	writer.Flush()
+	if err = writer.Error(); err != nil {
+		return nil, errors.Wrap(err, "cannot flush header row")
 	}
 
 	for i := 0; i < len(samples); i++ {
@@ -73,6 +80,10 @@ func ConvertToCSV(xcalxls string) ([]byte, error) {
 		}
 		if err = writer.Write(dataRow); err != nil {
 			return nil, errors.Wrapf(err, "cannot write data row %d", i)
+		}
+		writer.Flush()
+		if err = writer.Error(); err != nil {
+			return nil, errors.Wrapf(err, "cannot flush data row %d", i)
 		}
 	}
 
