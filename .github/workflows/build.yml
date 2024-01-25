@@ -117,6 +117,16 @@ jobs:
             *.cache-from=type=gha,scope=artifact-${{ env.PLATFORM_PAIR }}
             *.cache-to=type=gha,scope=artifact-${{ env.PLATFORM_PAIR }},mode=max
       -
+        name: Rename provenance
+        working-directory: ${{ env.DESTDIR }}/artifact
+        run: |
+          binname=$(find . -type f ! -name 'provenance.json')
+          mv "provenance.json" "${binname}.provenance.json"
+      -
+        name: List artifacts
+        run: |
+          tree -nh ./bin
+      -
         name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
@@ -126,8 +136,6 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     needs:
       - artifact
       - test
@@ -141,6 +149,10 @@ jobs:
         with:
           name: xcalxls2csv
           path: ${{ env.DESTDIR }}
+      -
+        name: List artifacts
+        run: |
+          tree -nh ${{ env.DESTDIR }}
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
