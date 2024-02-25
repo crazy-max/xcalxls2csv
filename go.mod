@@ -7,7 +7,7 @@ require (
 	github.com/elliotchance/orderedmap/v2 v2.2.0
 	github.com/extrame/xls v0.0.1
 	github.com/pkg/errors v0.9.1
-	github.com/rs/zerolog v1.31.0
+	github.com/rs/zerolog v1.32.0
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/sys v0.12.0
 )
