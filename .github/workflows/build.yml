@@ -174,7 +174,7 @@ jobs:
           targets: release
       -
         name: Upload release
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: release
           path: ${{ env.DESTDIR }}/release
