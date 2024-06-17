@@ -56,7 +56,7 @@ jobs:
           version: ${{ env.BUILDX_VERSION }}
       -
         name: Validate
-        uses: docker/bake-action@v4
+        uses: docker/bake-action@v5
         with:
           targets: ${{ matrix.target }}
 
@@ -75,7 +75,7 @@ jobs:
           version: ${{ env.BUILDX_VERSION }}
       -
         name: Test
-        uses: docker/bake-action@v4
+        uses: docker/bake-action@v5
         with:
           targets: test
           pull: true
@@ -116,7 +116,7 @@ jobs:
           version: ${{ env.BUILDX_VERSION }}
       -
         name: Build
-        uses: docker/bake-action@v4
+        uses: docker/bake-action@v5
         with:
           targets: artifact
           pull: true
@@ -169,7 +169,7 @@ jobs:
           version: ${{ env.BUILDX_VERSION }}
       -
         name: Build
-        uses: docker/bake-action@v4
+        uses: docker/bake-action@v5
         with:
           targets: release
       -
