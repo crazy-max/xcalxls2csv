@@ -7,8 +7,8 @@ github.com/alecthomas/repr v0.4.0/go.mod h1:Fr0507jx4eOXV7AlPV6AVZLYrLIuIeSOWtW5
 github.com/coreos/go-systemd/v22 v22.5.0/go.mod h1:Y58oyj3AT4RCenI/lSvhwexgC+NSVTIJ3seZv2GcEnc=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/elliotchance/orderedmap/v2 v2.2.0 h1:7/2iwO98kYT4XkOjA9mBEIwvi4KpGB4cyHeOFOnj4Vk=
-github.com/elliotchance/orderedmap/v2 v2.2.0/go.mod h1:85lZyVbpGaGvHvnKa7Qhx7zncAdBIBq6u56Hb1PRU5Q=
+github.com/elliotchance/orderedmap/v2 v2.4.0 h1:6tUmMwD9F998FNpwFxA5E6NQvSpk2PVw7RKsVq3+2Cw=
+github.com/elliotchance/orderedmap/v2 v2.4.0/go.mod h1:85lZyVbpGaGvHvnKa7Qhx7zncAdBIBq6u56Hb1PRU5Q=
 github.com/extrame/ole2 v0.0.0-20160812065207-d69429661ad7 h1:n+nk0bNe2+gVbRI8WRbLFVwwcBQ0rr5p+gzkKb6ol8c=
 github.com/extrame/ole2 v0.0.0-20160812065207-d69429661ad7/go.mod h1:GPpMrAfHdb8IdQ1/R2uIRBsNfnPnwsYE9YYI5WyY1zw=
 github.com/extrame/xls v0.0.1 h1:jI7L/o3z73TyyENPopsLS/Jlekm3nF1a/kF5hKBvy/k=
