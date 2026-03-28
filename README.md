@@ -1,5 +1,10 @@
 [![xcalxls2csv](.github/xcalxls2csv.png)](https://github.com/crazy-max/xcalxls2csv)
 
+## ⚠️ Abandoned project
+
+This project is not maintained anymore and is abandoned. Feel free to fork and
+make your own changes if needed.
+
 ## About
 
 Converts [Xcalibur](https://www.thermofisher.com/nl/en/home/industrial/mass-spectrometry/liquid-chromatography-mass-spectrometry-lc-ms/lc-ms-software/lc-ms-data-acquisition-software/xcalibur-data-acquisition-interpretation-software.html)
